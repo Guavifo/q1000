@@ -3,9 +3,16 @@ package main
 import (
 	"fmt"
 	"github.com/nlopes/slack"
+	"os"
 )
 
 func main() {
+
+	args := os.Args[1:]
+	if len(args) != 1 {
+		panic("Token argument is missing. Cannot start.")
+	}
+
 	api := slack.New("token")
 
 	groups, err := api.GetGroups(false)
