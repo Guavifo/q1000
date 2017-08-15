@@ -1,4 +1,4 @@
-package chatLog
+package chatlog
 
 import (
 	"fmt"

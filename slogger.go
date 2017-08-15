@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/nlopes/slack"
 	"os"
-	"slogger/chatLog"
+	"slogger/chatlog"
 )
 
 var (
@@ -34,7 +34,7 @@ func main() {
 
 		case *slack.MessageEvent:
 			fmt.Printf("Message: %v\n", ev)
-			err := chatLog.WriteLog(
+			err := chatlog.WriteLog(
 				getChannel(ev.Channel),
 				getUsername(ev.User),
 				ev.Text,
