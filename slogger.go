@@ -20,6 +20,12 @@ func main() {
 		panic("Token argument is missing. Cannot start.")
 	}
 
+	log, err := chatlog.OpenDefault()
+	if err != nil {
+		panic("Cannot open log.")
+	}
+	defer log.Close()
+
 	api = slack.New(args[0])
 
 	rtm := api.NewRTM()
@@ -34,7 +40,7 @@ func main() {
 
 		case *slack.MessageEvent:
 			fmt.Printf("Message: %v\n", ev)
-			err := chatlog.WriteLog(
+			err := log.WriteLog(
 				getChannel(ev.Channel),
 				getUsername(ev.User),
 				ev.Text,
