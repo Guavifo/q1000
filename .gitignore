@@ -16,5 +16,6 @@
 # Debugging
 debug
 
-# Start files
+# Runtime files
 start.bat
+slackmessages.log
