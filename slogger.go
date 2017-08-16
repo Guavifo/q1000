@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/nlopes/slack"
 	"os"
+
+	"github.com/nlopes/slack"
+
 	"slogger/chatlog"
 )
 
@@ -14,7 +16,6 @@ var (
 )
 
 func main() {
-
 	args := os.Args[1:]
 	if len(args) != 1 {
 		panic("Token argument is missing. Cannot start.")
@@ -88,7 +89,6 @@ func getChannel(id string) string {
 }
 
 func getUsername(user string) string {
-
 	if username, ok := users[user]; ok {
 		return username
 	}

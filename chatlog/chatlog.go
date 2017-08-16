@@ -56,14 +56,17 @@ func (l *Log) Close() error {
 
 func getTime(ts string) string {
 	parsingTime := strings.Split(ts, ".")
+
 	seconds, err := strconv.ParseInt(parsingTime[0], 10, 64)
 	if err != nil {
 		panic(err)
 	}
+
 	nanoSeconds, err := strconv.ParseInt(parsingTime[1], 10, 64)
 	if err != nil {
 		panic(err)
 	}
+
 	timeStamp := time.Unix(seconds, nanoSeconds)
 	return timeStamp.Format(time.RFC822)
 }
