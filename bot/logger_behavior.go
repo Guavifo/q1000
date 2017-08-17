@@ -15,8 +15,11 @@ type LoggerBehavior struct {
 }
 
 // NewLoggerBehavior will make a new behavior for logging
-func NewLoggerBehavior(log *chatlog.Log) LoggerBehavior {
-	return LoggerBehavior{logger: log}
+func NewLoggerBehavior(log *chatlog.Log) (*LoggerBehavior, error) {
+	if log == nil {
+		return nil, errors.New("Cannot make LoggerBehavior with a nil chatlog.log")
+	}
+	return &LoggerBehavior{logger: log}, nil
 }
 
 // Evaluate will evalutate a slack message event and log appropriately

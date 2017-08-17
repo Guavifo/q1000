@@ -22,7 +22,11 @@ func main() {
 	}
 	defer log.Close()
 
-	loggerBehavior := bot.NewLoggerBehavior(log)
+	loggerBehavior, err := bot.NewLoggerBehavior(log)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Cannot create LoggerBehavior. ", err)
+		os.Exit(1)
+	}
 	behaviors := []bot.Behavior{loggerBehavior}
 
 	theBot, err := bot.NewBot(args[0], behaviors)
