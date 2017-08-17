@@ -15,6 +15,7 @@
 
 # Debugging
 debug
+.vscode/
 
 # Runtime files
 start.bat
