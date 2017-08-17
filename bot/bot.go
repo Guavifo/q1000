@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/nlopes/slack"
 
@@ -10,15 +11,16 @@ import (
 
 // Bot represents an instance of a bot
 type Bot struct {
-	api *slack.Client
-	rtm *slack.RTM
+	api       *slack.Client
+	rtm       *slack.RTM
+	behaviors []Behavior
 
 	channels map[string]string
 	users    map[string]string
 }
 
 // NewBot will make an instance of a bot
-func NewBot(token string) (*Bot, error) {
+func NewBot(token string, behaviors []Behavior) (*Bot, error) {
 	if token == "" {
 		return nil, fmt.Errorf("token was empty")
 	}
@@ -27,8 +29,9 @@ func NewBot(token string) (*Bot, error) {
 	rtm := api.NewRTM()
 
 	return &Bot{
-			api: api,
-			rtm: rtm,
+			api:       api,
+			rtm:       rtm,
+			behaviors: behaviors,
 		},
 		nil
 }
@@ -45,15 +48,11 @@ func (b *Bot) Run(log *chatlog.Log) {
 			b.rtm.SendMessage(b.rtm.NewOutgoingMessage("HI!!!.", "#general"))
 
 		case *slack.MessageEvent:
-			fmt.Printf("Message: %v\n", ev)
-			err := log.WriteLog(
-				b.getChannel(ev.Channel),
-				b.getUsername(ev.User),
-				ev.Text,
-				ev.Timestamp)
-			if err != nil {
-				fmt.Println("Error in main writeing message log: ", err)
-				recover()
+			for _, beh := range b.behaviors {
+				err := beh.Evaluate(ev, b.rtm)
+				if err != nil {
+					fmt.Fprintln(os.Stderr, "Error when evaluating a behavior. ", err)
+				}
 			}
 
 		case *slack.RTMError:
@@ -65,6 +64,7 @@ func (b *Bot) Run(log *chatlog.Log) {
 		}
 	}
 }
+
 func (b *Bot) setChannelList() {
 	chans, err := b.api.GetChannels(true)
 	if err != nil {

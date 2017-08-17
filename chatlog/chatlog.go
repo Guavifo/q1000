@@ -1,6 +1,7 @@
 package chatlog
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -37,8 +38,12 @@ func OpenDefault() (*Log, error) {
 
 // WriteLog will persist slack messages
 func (l *Log) WriteLog(channel string, username string, message string, timeStamp string) error {
-	entry := fmt.Sprintf("%s|%21s|%21s|\t%s\n", getTime(timeStamp), channel, username, message)
+	if l.file == nil {
+		err := errors.New("tried accessing log file that is nil")
+		return err
+	}
 
+	entry := fmt.Sprintf("%s|%21s|%21s|\t%s\n", getTime(timeStamp), channel, username, message)
 	_, err := l.file.Write([]byte(entry))
 
 	return err
