@@ -43,13 +43,9 @@ func (b *Bot) Run(log *chatlog.Log) {
 	for msg := range b.rtm.IncomingEvents {
 		switch ev := msg.Data.(type) {
 		case *slack.ConnectedEvent:
-			fmt.Println("Info: ", ev.Info)
-			fmt.Println("Connection Counter: ", ev.ConnectionCount)
-			b.rtm.SendMessage(b.rtm.NewOutgoingMessage("HI!!!.", "#general"))
-
 		case *slack.MessageEvent:
 			for _, beh := range b.behaviors {
-				err := beh.Evaluate(ev, b.rtm)
+				err := beh.Evaluate(ev, b)
 				if err != nil {
 					fmt.Fprintln(os.Stderr, "Error when evaluating a behavior. ", err)
 				}

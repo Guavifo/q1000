@@ -6,5 +6,5 @@ import (
 
 // Behavior interface is how to add behaviors that react to events
 type Behavior interface {
-	Evaluate(*slack.MessageEvent, *slack.RTM) error
+	Evaluate(*slack.MessageEvent, *Bot) error
 }
