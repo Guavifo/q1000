@@ -6,7 +6,7 @@ import (
 
 	"github.com/nlopes/slack"
 
-	"slogger/chatlog"
+	"q1000/chatlog"
 )
 
 // Bot represents an instance of a bot

@@ -6,7 +6,7 @@ import (
 
 	"github.com/nlopes/slack"
 
-	"slogger/chatlog"
+	"q1000/chatlog"
 )
 
 // LoggerBehavior handles what get logged from chat

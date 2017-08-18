@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"slogger/bot"
-	"slogger/chatlog"
+	"q1000/bot"
+	"q1000/chatlog"
 )
 
 func main() {
