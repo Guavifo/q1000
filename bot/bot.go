@@ -5,8 +5,6 @@ import (
 	"os"
 
 	"github.com/nlopes/slack"
-
-	"q1000/chatlog"
 )
 
 // Bot represents an instance of a bot
@@ -37,7 +35,7 @@ func NewBot(token string, behaviors []Behavior) (*Bot, error) {
 }
 
 // Run the bot
-func (b *Bot) Run(log *chatlog.Log) {
+func (b *Bot) Run() {
 	go b.rtm.ManageConnection()
 
 	for msg := range b.rtm.IncomingEvents {
@@ -75,7 +73,8 @@ func (b *Bot) setChannelList() {
 	}
 }
 
-func (b *Bot) getChannel(id string) string {
+// GetChannel gets the channel name that matches the ID
+func (b *Bot) GetChannel(id string) string {
 	if channelName, ok := b.channels[id]; ok {
 		return channelName
 	}
@@ -88,7 +87,8 @@ func (b *Bot) getChannel(id string) string {
 	return id
 }
 
-func (b *Bot) getUsername(user string) string {
+// GetUsername gets the username for the user
+func (b *Bot) GetUsername(user string) string {
 	if username, ok := b.users[user]; ok {
 		return username
 	}

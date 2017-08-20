@@ -22,7 +22,7 @@ func main() {
 	}
 	defer log.Close()
 
-	loggerBehavior, err := bot.NewLoggerBehavior(log)
+	loggerBehavior, err := chatlog.NewLoggerBehavior(log)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Cannot create LoggerBehavior. ", err)
 		os.Exit(1)
@@ -35,5 +35,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	theBot.Run(log)
+	theBot.Run()
 }
