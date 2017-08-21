@@ -22,7 +22,7 @@ func NewLoggerBehavior(log *Log) (*LoggerBehavior, error) {
 	return &LoggerBehavior{logger: log}, nil
 }
 
-// Evaluate will evalutate a slack message event and log appropriately
+// Evaluate will evaluate a slack message event and log appropriately
 func (b LoggerBehavior) Evaluate(ev *slack.MessageEvent, bot *bot.Bot) error {
 	fmt.Printf("Message: %v\n", ev)
 

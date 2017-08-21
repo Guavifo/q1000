@@ -26,12 +26,13 @@ func NewBot(token string, behaviors []Behavior) (*Bot, error) {
 	api := slack.New(token)
 	rtm := api.NewRTM()
 
-	return &Bot{
-			api:       api,
-			rtm:       rtm,
-			behaviors: behaviors,
-		},
-		nil
+	theBot := &Bot{
+		api:       api,
+		rtm:       rtm,
+		behaviors: behaviors,
+	}
+
+	return theBot, nil
 }
 
 // Run the bot
@@ -104,4 +105,17 @@ func (b *Bot) GetUsername(user string) string {
 
 	b.users[user] = userInfo.Name
 	return userInfo.Name
+}
+
+// MessageChannel will post a message to a slack channel
+func (b *Bot) MessageChannel(channel string, message string) error {
+	params := slack.PostMessageParameters{
+		AsUser: true,
+	}
+
+	_, _, err := b.api.PostMessage(channel, message, params)
+	if err != nil {
+		return err
+	}
+	return nil
 }
