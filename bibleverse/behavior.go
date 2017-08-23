@@ -1,6 +1,7 @@
 package bibleverse
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -29,6 +30,12 @@ func (b *Behavior) Evaluate(ev *slack.MessageEvent, bot *bot.Bot) error {
 		return nil
 	}
 
+	verses := b.parseText(ev.Text)
+	if len(verses) == 0 {
+		return nil
+	}
+
+	bot.MessageChannel(ev.Channel, b.buildMessage(verses))
 	return nil
 }
 
@@ -57,5 +64,14 @@ func (b *Behavior) parseText(text string) []string {
 }
 
 func (b *Behavior) buildMessage(verses []string) string {
-	return "So does this one: <http://www.foo.com|www.foo.com>"
+	message := ""
+	length := len(verses)
+	for index, verse := range verses {
+		message += fmt.Sprintf("<https://www.biblegateway.com/passage/?search=%s|%s>", verse, verse)
+		if index < length-1 {
+			message += " - "
+		}
+	}
+
+	return message
 }
