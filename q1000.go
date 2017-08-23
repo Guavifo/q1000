@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"q1000/bibleverse"
 
 	"q1000/bot"
 	"q1000/chatlog"
@@ -32,7 +33,11 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Cannot create LoggerBehavior. ", err)
 		os.Exit(1)
 	}
-	behaviors := []bot.Behavior{loggerBehavior, &swearjar.Behavior{}}
+	behaviors := []bot.Behavior{
+		loggerBehavior,
+		swearjar.NewBehavior(),
+		bibleverse.NewBehavior(),
+	}
 
 	theBot, err := bot.NewBot(args[0], behaviors)
 	if err != nil {
