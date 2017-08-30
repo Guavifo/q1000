@@ -38,33 +38,37 @@ func (b *Behavior) Evaluate(ev *slack.MessageEvent, bot *bot.Bot) error {
 	text := strings.ToLower(ev.Text)
 	for _, swear := range b.swears {
 		if strings.Contains(text, swear) {
-			err := b.incrementSwearCount(ev.User)
+			var message = ""
+			swearCount, err := b.incrementSwearCount(ev.User)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Could not write to swearjar: ", err)
+				message = fmt.Sprintf("%v, you owe swearbucks to the swear jar. Pay up!", bot.GetUsername(ev.User))
+			} else {
+				message = fmt.Sprintf("%v, you owe %v swearbucks to the swear jar. Pay up!", bot.GetUsername(ev.User), swearCount)
+
 			}
-			message := bot.GetUsername(ev.User) + ", you need to make a deposit to the swear jar. Pay up!"
 			bot.MessageChannel(ev.Channel, message)
 			return nil
 		}
 	}
 
-	if strings.Contains(text, "pay up") {
+	if strings.HasPrefix(strings.ToLower(text), "pay swearbuck") {
 		bot.MessageChannel(ev.Channel, "All debts are payed.")
 	}
 	return nil
 }
 
-func (b *Behavior) incrementSwearCount(userID string) error {
+func (b *Behavior) incrementSwearCount(userID string) (int, error) {
 	result, err := b.store.Query("select swearcount from swearjar where userid=?", userID)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	count := 0
 	if result.Next() {
 		err = result.Scan(&count)
 		if err != nil {
-			return err
+			return 0, err
 		}
 	}
 	count++
@@ -76,9 +80,9 @@ func (b *Behavior) incrementSwearCount(userID string) error {
 			userid = values(userid), 
 			swearcount = values(swearcount)`)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	_, err = stmt.Exec(userID, count)
-	return err
+	return count, err
 }
