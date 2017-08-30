@@ -22,6 +22,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Error opening data store. ", err)
 		os.Exit(1)
 	}
+	defer store.Close()
 
 	behaviors := []bot.Behavior{
 		swearjar.NewBehavior(store),
