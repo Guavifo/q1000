@@ -24,6 +24,7 @@ func NewBehavior(store *data.Store) *Behavior {
 			"fuck",
 			"shit",
 			"damn",
+			"wtf",
 		},
 		store: store,
 	}
