@@ -109,7 +109,7 @@ func (b *Behavior) decrementSwearCount(userID string) (int, error) {
 			if err != nil {
 				return count, err
 			}
-			_, err = stmt.Exec(count, err)
+			_, err = stmt.Exec(count, userID)
 			if err != nil {
 				return count, err
 			}
