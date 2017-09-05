@@ -8,6 +8,7 @@ import (
 	"q1000/bot"
 	"q1000/data"
 	"q1000/swearjar"
+	"q1000/troll"
 )
 
 func main() {
@@ -27,6 +28,7 @@ func main() {
 	behaviors := []bot.Behavior{
 		swearjar.NewBehavior(store),
 		bibleverse.NewBehavior(),
+		troll.NewBehavior(),
 	}
 
 	theBot, err := bot.NewBot(args[0], behaviors)
