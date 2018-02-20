@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"q1000/bibleverse"
-	"q1000/bot"
-	"q1000/data"
-	"q1000/swearjar"
-	"q1000/troll"
+	"github.com/quakkels/q1000/bibleverse"
+	"github.com/quakkels/q1000/bot"
+	"github.com/quakkels/q1000/data"
+	"github.com/quakkels/q1000/swearjar"
+	"github.com/quakkels/q1000/troll"
 )
 
 func main() {

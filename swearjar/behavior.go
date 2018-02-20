@@ -7,8 +7,8 @@ import (
 
 	"github.com/nlopes/slack"
 
-	"q1000/bot"
-	"q1000/data"
+	"github.com/quakkels/q1000/bot"
+	"github.com/quakkels/q1000/data"
 )
 
 // Behavior handles tracking swears and asking for fake payments
@@ -22,9 +22,12 @@ func NewBehavior(store *data.Store) *Behavior {
 	return &Behavior{
 		swears: []string{
 			"fuck",
+			"fuuk",
+			"asshat",
 			"shit",
 			"damn",
 			"wtf",
+			"crappy",
 		},
 		store: store,
 	}

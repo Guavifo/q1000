@@ -7,7 +7,7 @@ import (
 
 	"github.com/nlopes/slack"
 
-	"q1000/bot"
+	"github.com/quakkels/q1000/bot"
 )
 
 // Behavior for troll joke messages
