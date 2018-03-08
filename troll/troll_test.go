@@ -8,10 +8,11 @@ import (
 
 func TestTrollMessageWithNoMatch(t *testing.T) {
 	// arrange
+	b := NewBehavior()
 	message := "Hiya... this has nothing for the troll to key onto."
 
 	// act
-	result := getTrollMessage(message)
+	result := b.getTrollMessage(message)
 
 	// assert
 	if result != "" {
@@ -21,11 +22,12 @@ func TestTrollMessageWithNoMatch(t *testing.T) {
 
 func TestTrollMessageWithAMatch(t *testing.T) {
 	// arrange
+	b := NewBehavior()
 	message := "Hiya... this is kind of like a dead mouse."
 	expected := "like a dead mouse."
 
 	// act
-	result := getTrollMessage(message)
+	result := b.getTrollMessage(message)
 
 	// assert
 	if !strings.HasSuffix(result, expected) {
@@ -35,11 +37,12 @@ func TestTrollMessageWithAMatch(t *testing.T) {
 
 func TestTrollMessageWithALongMessage(t *testing.T) {
 	// arrange
+	b := NewBehavior()
 	message := "Hiya... this is kind of like a dead mouse.whadaya think?"
 	expected := "like a dead mouse."
 
 	// act
-	result := getTrollMessage(message)
+	result := b.getTrollMessage(message)
 
 	// assert
 	if !strings.HasSuffix(result, expected) {
@@ -49,13 +52,14 @@ func TestTrollMessageWithALongMessage(t *testing.T) {
 
 func TestTrollMessageWithALineBreak(t *testing.T) {
 	// arrange
+	b := NewBehavior()
 	message := `Hiya... this is kind of like a dead mouse
 and a line break
 whadaya think?`
 	expected := "like a dead mouse"
 
 	// act
-	result := getTrollMessage(message)
+	result := b.getTrollMessage(message)
 
 	// assert
 	fmt.Println(result)
@@ -66,16 +70,49 @@ whadaya think?`
 
 func TestTrollMessageWithMoreThanOneMatch(t *testing.T) {
 	// arrange
+	b := NewBehavior()
 	message := `Hiya... this is kind of like a dead mouse
 and a line break
 whadaya think? I think it is kind of like a nightmare.`
 	expected := "like a nightmare."
 
 	// act
-	result := getTrollMessage(message)
+	result := b.getTrollMessage(message)
 
 	// assert
 	if !strings.HasSuffix(result, expected) {
 		t.Fatalf("Expected suffix <%s>. Got %s\n", expected, result)
+	}
+}
+
+func TestIrishMessage(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := `Hiya... this is kind of like a dead mouse
+and a line break
+whadaya think? I think it is kind of like a nightmare. Hammock`
+
+	// act
+	result := b.getIrishMessage(message)
+
+	// assert
+	if result == "" {
+		t.Fatalf("Expected message. Got empty string\n")
+	}
+}
+
+func TestIrishMessageWithNoMatch(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := `Hiya... this is kind of like a dead mouse
+and a line break
+whadaya think? I think it is kind of like a nightmare. Shamrock`
+
+	// act
+	result := b.getIrishMessage(message)
+
+	// assert
+	if result != "" {
+		t.Fatalf("Expected empty string. Got message\n")
 	}
 }
