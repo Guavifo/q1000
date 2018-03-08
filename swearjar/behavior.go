@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/nlopes/slack"
 
@@ -44,12 +45,20 @@ func (b *Behavior) Evaluate(ev *slack.MessageEvent, bot *bot.Bot) error {
 		if strings.Contains(text, swear) {
 			var message = ""
 			swearCount, err := b.incrementSwearCount(ev.User)
+			username := bot.GetUsername(ev.User)
+			if time.Now().Month() == time.March {
+				if strings.ToLower(username) == "hammrock" {
+					username = "Shamrock"
+				}
+			}
+
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Could not write to swearjar: ", err)
-				message = fmt.Sprintf("%v, you owe swearbucks to the swear jar. Pay up!", bot.GetUsername(ev.User))
+				message = fmt.Sprintf("%v, you owe swearbucks to the swear jar. Pay up!", username)
 			} else {
-				message = fmt.Sprintf("%v, you owe %v swearbucks to the swear jar. Pay up!", bot.GetUsername(ev.User), swearCount)
+				message = fmt.Sprintf("%v, you owe %v swearbucks to the swear jar. Pay up!", username, swearCount)
 			}
+
 			bot.MessageChannel(ev.Channel, message)
 			return nil
 		}
