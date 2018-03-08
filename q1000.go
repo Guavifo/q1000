@@ -7,6 +7,7 @@ import (
 	"github.com/quakkels/q1000/bibleverse"
 	"github.com/quakkels/q1000/bot"
 	"github.com/quakkels/q1000/data"
+	"github.com/quakkels/q1000/dictionary"
 	"github.com/quakkels/q1000/swearjar"
 	"github.com/quakkels/q1000/troll"
 )
@@ -29,6 +30,7 @@ func main() {
 		swearjar.NewBehavior(store),
 		bibleverse.NewBehavior(),
 		troll.NewBehavior(),
+		dictionary.NewBehavior(),
 	}
 
 	theBot, err := bot.NewBot(args[0], behaviors)
