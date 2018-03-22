@@ -47,7 +47,7 @@ func (b *Behavior) Evaluate(ev *slack.MessageEvent, bot *bot.Bot) error {
 			swearCount, err := b.incrementSwearCount(ev.User)
 			username := bot.GetUsername(ev.User)
 			if time.Now().Month() == time.March {
-				if strings.ToLower(username) == "hammrock" {
+				if ev.User == "U2YK5ATPB" {
 					username = "Shamrock"
 				}
 			}
