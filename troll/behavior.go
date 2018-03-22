@@ -20,7 +20,7 @@ type Behavior struct {
 // NewBehavior returns a new troll behavior
 func NewBehavior() *Behavior {
 	return &Behavior{
-		regex:      regexp.MustCompile(`((is kind of )|(was kind of )|(it's kind of )|(that's kind of ))([a-z]?|[A-Z]?|( ))+(.?|!?)`),
+		regex:      regexp.MustCompile(`((is kind of )|(was kind of )|(it's kind of )|(that's kind of )|(its kind of )|(thats kind of )(is kinda )|(was kinda )|(it's kinda )|(that's kinda )|(its kinda )|(thats kinda ))([a-z]?|[A-Z]?|( ))+(.?|!?)`),
 		irishRegex: regexp.MustCompile(`^hamrock|[^shamrock]hamrock|hammock`),
 	}
 }
@@ -70,6 +70,14 @@ func (b *Behavior) getTrollMessage(message string) string {
 	match = strings.TrimPrefix(match, "was kind of ")
 	match = strings.TrimPrefix(match, "it's kind of ")
 	match = strings.TrimPrefix(match, "that's kind of ")
+	match = strings.TrimPrefix(match, "its kind of ")
+	match = strings.TrimPrefix(match, "thats kind of ")
+	match = strings.TrimPrefix(match, "is kinda ")
+	match = strings.TrimPrefix(match, "was kinda ")
+	match = strings.TrimPrefix(match, "it's kinda ")
+	match = strings.TrimPrefix(match, "that's kinda ")
+	match = strings.TrimPrefix(match, "its kinda ")
+	match = strings.TrimPrefix(match, "thats kinda ")
 
 	return fmt.Sprintf("Your face is kind of %s", match)
 }

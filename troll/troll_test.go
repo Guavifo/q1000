@@ -85,6 +85,66 @@ whadaya think? I think it is kind of like a nightmare.`
 	}
 }
 
+func TestTrollMessageWithConcatenation(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := "Hiya... it's kind of like a dead mouse"
+	expected := "like a dead mouse"
+
+	// act
+	result := b.getTrollMessage(message)
+
+	// assert
+	if !strings.HasSuffix(result, expected) {
+		t.Fatalf("Expected suffix <%s>. Got %s\n", expected, result)
+	}
+}
+
+func TestTrollMessageWithConcatenationError(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := "Hiya... its kind of like a dead mouse"
+	expected := "like a dead mouse"
+
+	// act
+	result := b.getTrollMessage(message)
+
+	// assert
+	if !strings.HasSuffix(result, expected) {
+		t.Fatalf("Expected suffix <%s>. Got %s\n", expected, result)
+	}
+}
+
+func TestTrollMessageWithoutRepeatingIntro(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := "thats kind of a big deal"
+	expected := "Your face is kind of a big deal"
+
+	// act
+	result := b.getTrollMessage(message)
+
+	// assert
+	if result != expected {
+		t.Fatalf("Expected: <%s>. Got: <%s>\n", expected, result)
+	}
+}
+
+func TestTrollMessageWithoutConcatWithoutRepeatingIntro(t *testing.T) {
+	// arrange
+	b := NewBehavior()
+	message := "it is kind of a big deal"
+	expected := "Your face is kind of a big deal"
+
+	// act
+	result := b.getTrollMessage(message)
+
+	// assert
+	if result != expected {
+		t.Fatalf("Expected: <%s>. Got: <%s>\n", expected, result)
+	}
+}
+
 func TestIrishMessage(t *testing.T) {
 	// arrange
 	b := NewBehavior()
