@@ -49,7 +49,7 @@ func (b *Behavior) getTrollMessages(message string) []string {
 
 	now := time.Now()
 	month := now.Month()
-	if month == time.March {
+	if month == time.April {
 		irishMessage := b.getIrishMessage(message)
 		if irishMessage != "" {
 			messages = append(messages, irishMessage)
@@ -88,5 +88,5 @@ func (b *Behavior) getIrishMessage(message string) string {
 	if len(results) == 0 {
 		return ""
 	}
-	return "Please refer to him as 'Shamrock' for the month."
+	return "Please refer to him as 'iron ham' for the month."
 }
