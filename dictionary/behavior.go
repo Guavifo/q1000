@@ -17,7 +17,7 @@ type Behavior struct {
 // NewBehavior creates a new dictionary Behavior
 func NewBehavior() *Behavior {
 	return &Behavior{
-		regex: regexp.MustCompile("(define|Define) ([a-z|A-Z|-|']+)"),
+		regex: regexp.MustCompile("(define:|Define:) ([a-z|A-Z|-|']+)"),
 	}
 }
 
