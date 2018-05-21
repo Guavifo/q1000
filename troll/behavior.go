@@ -88,5 +88,5 @@ func (b *Behavior) getIrishMessage(message string) string {
 	if len(results) == 0 {
 		return ""
 	}
-	return "Please refer to him as 'iron ham' for the month."
+	return "Please refer to him as 'hamclops' for the month."
 }
